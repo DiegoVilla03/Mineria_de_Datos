@@ -1,26 +1,12 @@
-import pymysql.cursors
+import pymysql
 
-# Connect to the database
-conn = pymysql.connect(host='localhost',
-                             user='root',
-                             password='123456789',
-                             database='db')
 
-cursor = conn.cursor()
+connection = pymysql.connect(host="localhost", user="root", password="123456789", database="pokemon")
 
-#*Select example
-cursor.execute(
-    "SELECT nombre, apellido FROM clientes"
-)
-for nombre, apellido in cursor.fetchall():
-    print("{0} {1}".format(nombre, apellido))
-    
-
-#* Insert Example
-cursor.execute(
-    "INSERT INTO clientes VALUES (%s, %s)",
-    ("Recursos", "Python")
-)
-# Guardar cambios.
-conn.commit()
-conn.close()
+cursor = connection.cursor()
+cursor.execute("SELECT TYPE1, COUNT(TYPE1) FROM STATS GROUP BY TYPE1")
+result = cursor.fetchall()
+for row in result:
+    print(row)
+cursor.close()
+connection.close()
